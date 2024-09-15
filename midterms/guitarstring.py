@@ -1,13 +1,20 @@
 #!/usr/bin/env python3
+from ringbuffer import *
+import numpy as np
+import random
 
 class GuitarString:
     def __init__(self, frequency: float):
         '''
         Create a guitar string of the given frequency, using a sampling rate of 44100 Hz
         '''
-        # TO-DO: implement this
-        self.capacity = # TO-DO: compute the max capacity of the ring buffer based on the frequency
-        self.buffer =   # TO-DO: construct the ring buffer object
+        #^ Check implementation
+        # computes the max capacity of the ring buffer based on the frequency
+        self.capacity = int(np.ceil(44100 / frequency))
+        # constructs the ring buffer object
+        self.buffer = RingBuffer(self.capacity)
+        # intializes counter for tick activations
+        self.tickTime = 0
 
     @classmethod
     def make_from_array(cls, init: list[int]):
@@ -27,22 +34,31 @@ class GuitarString:
         '''
         Set the buffer to white noise
         '''
-        # TO-DO: implement this
+        #^ Check implementation
+        for i in range(self.capacity):
+            self.buffer.enqueue(random.uniform(-0.5, 0.5))
 
     def tick(self):
         '''
         Advance the simulation one time step by applying the Karplus--Strong update
         '''
-        # TO-DO: implement this
+        #^ Check implementation
+        tick_1 = self.buffer.dequeue()
+        tick_2 = self.buffer.peek()
+        curSample = 0.996 * 0.5 * (tick_1 + tick_2)
+        self.buffer.enqueue(curSample)
+        self.tickTime += 1
 
     def sample(self) -> float:
         '''
         Return the current sample
         '''
-        # TO-DO: implement this
-
+        #^ Check implementation
+        return self.buffer.peek()
+    
     def time(self) -> int:
         '''
         Return the number of ticks so far
         '''
-        # TO-DO: implement this
+        #^ Check implementation
+        return self.tickTime

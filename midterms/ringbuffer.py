@@ -41,7 +41,7 @@ class RingBuffer:
         '''
         #^ Check implementation
         if (self.size() < self.MAX_CAP):
-            self.buffer.insert(self._rear, x)
+            self.buffer[self._rear] = x
             self._rear = (self._rear + 1) % self.MAX_CAP
         else:
             raise RingBufferFull
