@@ -1,2 +1,3 @@
 .venv
 midterms/__pycache__/*
+midterms/__pycache__/ringbuffer.cpython-312.pyc

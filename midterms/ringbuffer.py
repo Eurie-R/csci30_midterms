@@ -10,16 +10,19 @@ class RingBuffer:
         self._front = 0
         self._rear = 0 
         self.buffer = [None] * self.MAX_CAP
+        self._size = 0
 
     def size(self) -> int:
         '''
         Return number of items currently in the buffer
         '''
-        #^ Check implementation
-        length = 0
-        for item in self.buffer:
-            length += 1 if item != None else 0
-        return length
+        #^ Updated implementation
+        # length = 0
+        # for item in self.buffer:
+        #     length += 1 if item != None else 0
+        # return length
+        # return sum(1 for item in self.buffer if item != None)
+        return self._size
 
     def is_empty(self) -> bool:
         '''
@@ -43,6 +46,7 @@ class RingBuffer:
         if (self.size() < self.MAX_CAP):
             self.buffer[self._rear] = x
             self._rear = (self._rear + 1) % self.MAX_CAP
+            self._size += 1
         else:
             raise RingBufferFull
 
@@ -55,6 +59,7 @@ class RingBuffer:
             oldest_item = self.buffer[self._front]
             self.buffer[self._front] = None
             self._front = (self._front + 1) % self.MAX_CAP
+            self._size -= 1
             return oldest_item
         else:
             raise RingBufferEmpty

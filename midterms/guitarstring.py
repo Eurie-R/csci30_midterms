@@ -10,11 +10,14 @@ class GuitarString:
         '''
         #^ Check implementation
         # computes the max capacity of the ring buffer based on the frequency
-        self.capacity = int(np.ceil(44100 / frequency))
+        #? self.capacity = int(np.ceil(44100 / frequency))
+        self.capacity = int(-(-44100 // frequency))
         # constructs the ring buffer object
         self.buffer = RingBuffer(self.capacity)
         # intializes counter for tick activations
         self.tickTime = 0
+        for _ in range(self.capacity):
+            self.buffer.enqueue(0)
 
     @classmethod
     def make_from_array(cls, init: list[int]):
@@ -35,7 +38,8 @@ class GuitarString:
         Set the buffer to white noise
         '''
         #^ Check implementation
-        for i in range(self.capacity):
+        for _ in range(self.capacity):
+            self.buffer.dequeue()
             self.buffer.enqueue(random.uniform(-0.5, 0.5))
 
     def tick(self):
