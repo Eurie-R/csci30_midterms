@@ -49,7 +49,7 @@ This repository contains the Python assignment for the CSCI 30 Midterms. Please 
    - It should result in something like:
      ```powershell
      project-directory> pip freeze
-     numpy==2.1.0
+     numpy==1.26.4      # note that the new specs mention that numpy 1.26.4 is the working version for this assignment
      pygame==2.6.0
      ```    
 
