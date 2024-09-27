@@ -9,7 +9,8 @@ if __name__ == '__main__':
     stdkeys.create_window()
 
     keyboard = "q2we4r5ty7u8i9op-[=]"
-    
+
+    keyL = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']  # Purely for recognizing note input
     notes = [GuitarString(440 * (1.059463**(x-12))) for x in range(len(keyboard))] 
 
     n_iters = 0
@@ -27,7 +28,7 @@ if __name__ == '__main__':
             key = stdkeys.next_key_typed()
             if key in keyboard:
                 notes[keyboard.index(key)].pluck()
-                print(key)
+                print(keyL[keyboard.index(key) % len(keyL)])
 
         # compute the superposition of samples
         # sample = string_A.sample() + string_C.sample()
