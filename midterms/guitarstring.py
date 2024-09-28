@@ -4,6 +4,9 @@ import numpy as np
 import random
 
 class GuitarString:
+    FADE_SECONDS = 4
+    FADE_TICK_THRESHOLD = FADE_SECONDS * 44100
+
     def __init__(self, frequency: float):
         '''
         Create a guitar string of the given frequency, using a sampling rate of 44100 Hz
@@ -38,6 +41,7 @@ class GuitarString:
         Set the buffer to white noise
         '''
         #^ Check implementation
+        self.tickTime = 0
         for _ in range(self.capacity):
             self.buffer.dequeue()
             self.buffer.enqueue(random.uniform(-0.5, 0.5))
@@ -66,3 +70,6 @@ class GuitarString:
         '''
         #^ Check implementation
         return self.tickTime
+
+    def is_faint(self) -> bool:
+        return self.time() > self.FADE_TICK_THRESHOLD

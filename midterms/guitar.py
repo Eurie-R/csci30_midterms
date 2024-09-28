@@ -33,11 +33,12 @@ if __name__ == '__main__':
         # compute the superposition of samples
         # sample = string_A.sample() + string_C.sample()
         sample = 0
-        sample = sum(note.sample() for note in notes)
+        sample = sum(note.sample() for note in notes if not note.is_faint())
 
         # play the sample on standard audio
         play_sample(sample)
 
         # advance the simulation of each guitar string by one step
         for note in notes:
-            note.tick()
+            if not note.is_faint():
+                note.tick()
