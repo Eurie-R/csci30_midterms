@@ -19,6 +19,7 @@ class GuitarString:
         self.buffer = RingBuffer(self.capacity)
         # intializes counter for tick activations
         self.tickTime = 0
+        self.isActive = False
         for _ in range(self.capacity):
             self.buffer.enqueue(0)
 
@@ -42,6 +43,7 @@ class GuitarString:
         '''
         #^ Check implementation
         self.tickTime = 0
+        self.isActive = True
         for _ in range(self.capacity):
             self.buffer.dequeue()
             self.buffer.enqueue(random.uniform(-0.5, 0.5))
@@ -56,12 +58,15 @@ class GuitarString:
         curSample = 0.996 * 0.5 * (tick_1 + tick_2)
         self.buffer.enqueue(curSample)
         self.tickTime += 1
+        if self.time() > self.FADE_TICK_THRESHOLD:
+            self.is_active = False
 
     def sample(self) -> float:
         '''
         Return the current sample
         '''
         #^ Check implementation
+        # print(self.capacity)
         return self.buffer.peek()
     
     def time(self) -> int:
@@ -70,6 +75,3 @@ class GuitarString:
         '''
         #^ Check implementation
         return self.tickTime
-
-    def is_faint(self) -> bool:
-        return self.time() > self.FADE_TICK_THRESHOLD

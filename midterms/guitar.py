@@ -31,14 +31,13 @@ if __name__ == '__main__':
                 print(keyL[keyboard.index(key) % len(keyL)])
 
         # compute the superposition of samples
-        # sample = string_A.sample() + string_C.sample()
         sample = 0
-        sample = sum(note.sample() for note in notes if not note.is_faint())
+        sample = sum(note.sample() for note in notes if note.isActive)
 
         # play the sample on standard audio
         play_sample(sample)
 
         # advance the simulation of each guitar string by one step
         for note in notes:
-            if not note.is_faint():
+            if note.isActive:
                 note.tick()
